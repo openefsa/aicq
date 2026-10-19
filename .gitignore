@@ -1,0 +1,4 @@
+aicq.egg-info
+*.pyc
+uv.lock
+.devcontainer/devcontainer-lock.json

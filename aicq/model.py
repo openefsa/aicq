@@ -1,7 +1,18 @@
-from pydantic import BaseModel, Field, RootModel, confloat, constr
-from typing import Any,List
+from pydantic import AfterValidator, BaseModel, Field, RootModel, confloat, constr
+from typing import Annotated, Any,List
 from uuid import UUID
+from jsonschema import validate
+from jsonschema import Draft202012Validator
 
+def is_json_schema(value):
+    latest_meta_schema = Draft202012Validator.META_SCHEMA
+
+    # 2. Spin up a meta-validator specifically checking against Draft 2020-12 rules
+    meta_validator = Draft202012Validator(latest_meta_schema)
+    meta_validator.check_schema(value)
+    
+
+    
 
 
 class IRRDataExtractionItem(BaseModel):
@@ -60,8 +71,9 @@ class StructuredOutputSchema(BaseModel):
     JSON schema defining the shape of the data to extract
     """
 
-    json_schema: dict[str, Any]
-
+    json_schema:   Annotated[dict[str, Any], AfterValidator(is_json_schema)] 
+    
+    
 class ExtractedValue(BaseModel):
     variable_name: str
     variable_value: Any
@@ -259,11 +271,6 @@ class VariableExtractionPrompt(BaseModel):
     """
     The past validations of this extraction prompt, if any
     """
-
-
-class StructuredOutputSchema(BaseModel):
-    """JSON schema sent to the LLMs specifying which data to extract."""
-    json_schema: dict = Field(description="The JSON schema for structured output extraction")
 
 
 class DataExtractionJobRequest(BaseModel):

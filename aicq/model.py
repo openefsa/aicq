@@ -38,7 +38,7 @@ meta_validator = Draft202012Validator(latest_meta_schema)
 
 def assert_valid_schema(value):
     meta_validator.check_schema(value)
-    value
+    return value
     
 
     

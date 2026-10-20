@@ -41,6 +41,12 @@ def assert_valid_schema(value):
     return value
     
 
+class DOI(RootModel[constr(pattern=r"^10.*$")]):
+    root: constr(pattern=r"^10.*$") = Field(..., examples=["10.2903/j.efsa.2026.10049"])
+    """
+    Digital Object Identifier
+    """
+
     
 
 
@@ -105,11 +111,6 @@ class StructuredOutputSchema(BaseModel):
     
 
 
-class DOI(RootModel[constr(pattern=r"^10.*$")]):
-    root: constr(pattern=r"^10.*$") = Field(..., examples=["10.2903/j.efsa.2026.10049"])
-    """
-    Digital Object Identifier
-    """
 
 
 class ExtractedValue(BaseModel):
@@ -164,31 +165,6 @@ class TitleAbstract(BaseModel):
 
 
 
-class IRRDataExtractionItem(BaseModel):
-    variable_name: str | None = None
-    all_values: list[Any] | None = None
-    unalike_score: confloat(ge=0.0, le=1.0) | None = None
-    """
-    Used if the variable is type 'categorical' or 'binary'. see R function ragree::unalike
-    """
-    string_distance: Any | None = None
-    """
-    Used if the variable is type 'text'. Uses 'edit distance' to calculate  text similarity metrices and then aggregate via xxxx into a single value
-    """
-    embedding_distance: confloat(ge=0.0, le=1.0) | None = None
-    """
-    Used if the variable is type 'text', Uses sentence-transformer to calculate embeddings and pair-wise cosine distance as text similarity metric and then aggregate via mean to a single value
-    """
-    normalized_coefficient_of_variation: float | None = None
-    """
-    Used if the variable is type 'number'
-    """
-
-
-class IRRDataExtraction(RootModel[list[IRRDataExtractionItem]]):
-    root: list[IRRDataExtractionItem] = Field(
-        ..., examples=[{"variable_name": "is_primary?", "unalike_score": 0.5}]
-    )
 
 
 class ValidationDataExtractionItem(BaseModel):
@@ -242,11 +218,6 @@ class ScreeningDecision(RootModel[list[ScreeningDecisionItem]]):
 
 
 
-class DOI(RootModel[constr(pattern=r"^10.*$")]):
-    root: constr(pattern=r"^10.*$") = Field(..., examples=["10.2903/j.efsa.2026.10049"])
-    """
-    Digital Object Identifier
-    """
 
 
 

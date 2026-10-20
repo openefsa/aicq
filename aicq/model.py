@@ -112,6 +112,13 @@ class DOI(RootModel[constr(pattern=r"^10.*$")]):
     """
 
 
+class ExtractedValue(BaseModel):
+    variable_name: str
+    variable_value: Any
+    
+class ExtractedValues(RootModel[list[ExtractedValue]]):
+    root: list[ExtractedValue]
+
 
 
 class DataExtractionResultMultiple(BaseModel):
@@ -155,12 +162,6 @@ class TitleAbstract(BaseModel):
     abstract: str
 
 
-class ExtractedValue(BaseModel):
-    variable_name: str
-    variable_value: Any
-    
-class ExtractedValues(RootModel[list[ExtractedValue]]):
-    root: list[ExtractedValue]
 
 
 class IRRDataExtractionItem(BaseModel):

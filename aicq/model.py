@@ -33,13 +33,12 @@ def get_model_info(sub_env):
     "anthropic2--claude-sonnet-4-5": {"env":"anthropic2","deployment": "claude-sonnet-4-5-20250929","oca": ["anthropic","claude-sonnet-4-5"] }
 }
 
+latest_meta_schema = Draft202012Validator.META_SCHEMA
+meta_validator = Draft202012Validator(latest_meta_schema)
 
-def is_json_schema(value):
-    latest_meta_schema = Draft202012Validator.META_SCHEMA
-
-    # 2. Spin up a meta-validator specifically checking against Draft 2020-12 rules
-    meta_validator = Draft202012Validator(latest_meta_schema)
+def assert_valid_schema(value):
     meta_validator.check_schema(value)
+    value
     
 
     
@@ -101,7 +100,7 @@ class StructuredOutputSchema(BaseModel):
     JSON schema defining the shape of the data to extract
     """
 
-    json_schema:   Annotated[dict[str, Any], AfterValidator(is_json_schema)] 
+    json_schema:   Annotated[dict[str, Any], AfterValidator(assert_valid_schema)] 
     
     
 class ExtractedValue(BaseModel):

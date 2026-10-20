@@ -256,18 +256,6 @@ class DOI(RootModel[constr(pattern=r"^10.*$")]):
 
 
 
-class DataExtractionResultMultiple(BaseModel):
-    model_id: str
-    doi: DOI
-    extracted_values_array: list[ExtractedValues]
-
-
-class DataExtractionResult(BaseModel):
-    model_id: str
-    doi: DOI
-    extracted_values: ExtractedValues
-
-
 class ScreeningResult(BaseModel):
     model_id: str
     doi: DOI | None = None

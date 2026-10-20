@@ -103,9 +103,6 @@ class StructuredOutputSchema(BaseModel):
     json_schema:   Annotated[dict[str, Any], AfterValidator(assert_valid_schema)] 
     
     
-class ExtractedValue(BaseModel):
-    variable_name: str
-    variable_value: Any
 
 
 class DOI(RootModel[constr(pattern=r"^10.*$")]):
@@ -115,8 +112,6 @@ class DOI(RootModel[constr(pattern=r"^10.*$")]):
     """
 
 
-class ExtractedValues(RootModel[list[ExtractedValue]]):
-    root: list[ExtractedValue]
 
 
 class DataExtractionResultMultiple(BaseModel):
@@ -163,8 +158,7 @@ class TitleAbstract(BaseModel):
 class ExtractedValue(BaseModel):
     variable_name: str
     variable_value: Any
-
-
+    
 class ExtractedValues(RootModel[list[ExtractedValue]]):
     root: list[ExtractedValue]
 

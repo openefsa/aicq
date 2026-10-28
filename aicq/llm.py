@@ -104,13 +104,16 @@ def get_model_list(env):
     return [deployment.replace("$ENV$",sub_env) for deployment in MODEL_INFO.keys()]
 
 
-def get_model_info(deployment):
-    if 'create-1c' in deployment:
-        key = deployment.replace('create-1c','$ENV$')
-    elif 'accept-2a' in deployment:
-        key = deployment.replace('accept-2a','$ENV$')
-    elif 'publish-3p' in deployment:
-        key = deployment.replace('publish-3p','$ENV$')
+def get_model_info(model_deployment_name):
+    
+    if 'create-1c' in model_deployment_name:
+        key = model_deployment_name.replace('create-1c','$ENV$')
+    elif 'accept-2a' in model_deployment_name:
+        key = model_deployment_name.replace('accept-2a','$ENV$')
+    elif 'publish-3p' in model_deployment_name:
+        key = model_deployment_name.replace('publish-3p','$ENV$')
+    else: 
+     raise Exception(f"unsupported deploymeny_id: {model_deployment_name}")    
         
     return MODEL_INFO[key]
     

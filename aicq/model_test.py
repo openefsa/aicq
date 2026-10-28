@@ -15,8 +15,10 @@ class MyTest(unittest.TestCase):
         self.assertListEqual(get_model_list("create"),['autocat-runtime-create-1c-llm-claude-opus-4_6', 'autocat-runtime-create-1c-llm-claude-opus-4_8', 'autocat-runtime-create-1c-llm-claude-opus-5', 'autocat-runtime-create-1c-llm-claude-sonnet-4_5', 'autocat-runtime-create-1c-llm-claude-sonnet-4_6', 'autocat-runtime-create-1c-llm-gpt4o', 'autocat-runtime-create-1c-llm-gpt4o-mini', 'autocat-runtime-create-1c-llm-gpt5', 'autocat-runtime-create-1c-llm-gpt5_1', 'autocat-runtime-create-1c-llm-gpt5_4', 'autocat-runtime-create-1c-llm-gpt5_5', 'autocat-runtime-create-1c-llm-gpt5_6-luna', 'autocat-runtime-create-1c-llm-gpt5_6-sol', 'autocat-runtime-create-1c-llm-gpt5_6-terra', 'autocat-runtime-create-1c-llm-gpt5-mini'])
         
         self.assertSetEqual(set([get_model_info(m)["limits"]["max_tokens"] for m in get_model_list("create")]),{128000, 64000, 16384})
-        #model_info_create=get_model_info("create")
         
+    def test_invalid(self):
+         with self.assertRaises(Exception):
+            get_model_info("hallo")
             
     
     def test_output_schema_invalid(self):

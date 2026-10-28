@@ -59,13 +59,13 @@ MODEL_INFO= {'autocat-runtime-$ENV$-llm-claude-opus-4_6':
      'autocat-runtime-$ENV$-llm-gpt5_5':
          {"env":"databricks",
                             "limits": {"max_tokens": 128000 },
-                            #"oca": ["azure","gpt-5.5"]
+                            "oca": ["azure","gpt-5.5"]
                             },
       
      'autocat-runtime-$ENV$-llm-gpt5_6-luna':
          {"env":"databricks",
                                      "limits": {"max_tokens": 128000 },
-                                     #"oca": ["azure","gpt-5.5"]
+                                     "oca": ["azure","gpt-5.6-luna"]
                                      }, 
      
      'autocat-runtime-$ENV$-llm-gpt5_6-sol':

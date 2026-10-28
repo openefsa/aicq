@@ -55,6 +55,7 @@ MODEL_INFO= {'autocat-runtime-$ENV$-llm-claude-opus-4_6':
                 "oca": ["azure","gpt-5.4"] }
          , 
      
+     
      'autocat-runtime-$ENV$-llm-gpt5_5':
          {"env":"databricks",
                             "limits": {"max_tokens": 128000 },
@@ -81,8 +82,12 @@ MODEL_INFO= {'autocat-runtime-$ENV$-llm-claude-opus-4_6':
          {"env":"databricks",
                    "limits": {"max_tokens": 128000 },
                    "oca": ["azure","gpt-5-mini"] },
+         
+     'autocat-runtime-$ENV$-llm-gpt5-nano':
+         {"env":"databricks",
+                   "limits": {"max_tokens": 128000 },
+                   "oca": ["azure","gpt-5-mini"] },
           
-     # 'autocat-runtime-$ENV$-llm-gpt5-nano':, 
      
      #'autocat-runtime-$ENV$-llm-text-embedding-3-large':, 
      #'autocat-runtime-$ENV$-llm-text-embedding-ada-002':

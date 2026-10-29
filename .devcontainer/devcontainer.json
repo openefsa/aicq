@@ -6,6 +6,13 @@
 	"image": "mcr.microsoft.com/devcontainers/base:resolute",
 	"features": {
 		"ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"mechatroner.rainbow-csv"
+			]
+		}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.

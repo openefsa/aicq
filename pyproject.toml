@@ -17,3 +17,6 @@ authors = [
   {name = "Carsten Behring", email = "carsten.behring@efsa.europa.eu"},
 ]
 readme = "README.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]

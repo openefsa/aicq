@@ -80,7 +80,20 @@ class MyTest(unittest.TestCase):
             ),
             {128000, 64000, 16384},
         )
-        self.assertEqual(len([get_model_info(m)["benchmarks"]["benchlm"]['overall'] for m in get_model_list("create")]),16)
+        self.assertEqual(
+            len(
+                [
+                    get_model_info(m)["benchmarks"]["benchlm"]["overall"]
+                    for m in get_model_list("create")
+                ]
+            ),
+            16,
+        )
+
+        self.assertSetEqual(
+            set([get_model_info(m)["oca"][0] for m in get_model_list("create")]),
+            {"azure", "anthropic"},
+        )
 
     def test_invalid(self):
         with self.assertRaises(Exception):

@@ -44,7 +44,8 @@ MODEL_INFO = {
     "autocat-runtime-$ENV$-llm-gpt4o": {
         "env": "databricks",
         "limits": {"max_tokens": 16384},
-        "benchmarks": {"benchlm": {"overall": 0}, "oca": ["azure", "gpt-4o-1120"]},
+        "benchmarks": {"benchlm": {"overall": 0}}, 
+        "oca": ["azure", "gpt-4o-1120"],
     },
     "autocat-runtime-$ENV$-llm-gpt4o-mini": {
         "env": "databricks",

@@ -9,21 +9,26 @@ MODEL_INFO = {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
         "oca": ["anthropic", "claude-opus-4-6"],
-        "benchmarks": {"benchlm": {"overall": 61.82, "inputPrice": 5 ,"outputPrice" :25 }},
+        "benchmarks": {
+            "benchlm": {"overall": 61.82, "inputPrice": 5, "outputPrice": 25}
+        },
     },
     "autocat-runtime-$ENV$-llm-claude-opus-4_8": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
         "oca": ["anthropic", "claude-opus-4-8"],
-        "benchmarks": {"benchlm": {"overall": 69.63,"inputPrice": 5 ,"outputPrice" :25 }},
+        "benchmarks": {
+            "benchlm": {"overall": 69.63, "inputPrice": 5, "outputPrice": 25}
+        },
     },
     "autocat-runtime-$ENV$-llm-claude-opus-5": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {
+            "benchlm": {"overall": 79.68, "inputPrice": 5, "outputPrice": 25}
+        },
         "oca": ["anthropic", "claude-opus-5"],
     },
-    
     "autocat-runtime-$ENV$-llm-claude-sonnet-4_5": {
         "env": "databricks",
         "limits": {"max_tokens": 64000},
@@ -39,13 +44,14 @@ MODEL_INFO = {
     "autocat-runtime-$ENV$-llm-gpt4o": {
         "env": "databricks",
         "limits": {"max_tokens": 16384},
-        "benchmarks": {"benchlm": {"overall": 0}, 
-                       "oca": ["azure", "gpt-4o-1120"]},
+        "benchmarks": {"benchlm": {"overall": 0}, "oca": ["azure", "gpt-4o-1120"]},
     },
     "autocat-runtime-$ENV$-llm-gpt4o-mini": {
         "env": "databricks",
         "limits": {"max_tokens": 16384},
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {
+            "benchlm": {"overall": 25.73, "inputPrice": 0.15, "outputPrice": 0.60}
+        },
         "oca": ["azure", "gpt-4o-mini-0718"],
     },
     "autocat-runtime-$ENV$-llm-gpt5": {
@@ -63,37 +69,49 @@ MODEL_INFO = {
     "autocat-runtime-$ENV$-llm-gpt5_4": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {
+            "benchlm": {"overall": 66.4, "inputPrice": 2.5, "outputPrice": 15}
+        },
         "oca": ["azure", "gpt-5.4"],
     },
     "autocat-runtime-$ENV$-llm-gpt5_5": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
         "oca": ["azure", "gpt-5.5"],
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {
+            "benchlm": {"overall": 68.82, "inputPrice": 5, "outputPrice": 30}
+        },
     },
     "autocat-runtime-$ENV$-llm-gpt5_6-luna": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {
+            "benchlm": {"overall": 63.8, "inputPrice": 0.2, "outputPrice": 1.2}
+        },
         "oca": ["azure", "gpt-5.5"],
     },
     "autocat-runtime-$ENV$-llm-gpt5_6-sol": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {
+            "benchlm": {"overall": 74.83, "inputPrice": 4, "outputPrice": 20}
+        },
         "oca": ["azure", "gpt-5.6-sol"],
     },
     "autocat-runtime-$ENV$-llm-gpt5_6-terra": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {
+            "benchlm": {"overall": 69.81, "inputPrice": 2, "outputPrice": 12}
+        },
         "oca": ["azure", "gpt-5.6-terra"],
     },
     "autocat-runtime-$ENV$-llm-gpt5-mini": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
-        "benchmarks": {"benchlm": {"overall": 47.92, "inputPrice": 0.25 ,"outputPrice" :2 }},
+        "benchmarks": {
+            "benchlm": {"overall": 47.92, "inputPrice": 0.25, "outputPrice": 2}
+        },
         "oca": ["azure", "gpt-5-mini"],
     },
     "autocat-runtime-$ENV$-llm-gpt5-nano": {

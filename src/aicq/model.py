@@ -65,10 +65,6 @@ class IRRDataExtraction(RootModel[list[IRRDataExtractionItem]]):
 
 class PromptTemplate(RootModel[str]):
     
-    @field_validator('root', mode='after')  
-    @classmethod
-    def is_even(cls, value: int) -> int:
-            raise ValueError(f"missing template")
     
     root: str = Field(
         ...,
@@ -236,8 +232,25 @@ class VariableExtractionPrompt(BaseModel):
 
 
 class DataExtractionJobRequest(BaseModel):
+
+    @field_validator('template', mode='after')  
+    @classmethod
+    def has_placeholders(cls, value: int) -> int:
+            if "${schema}" not in value or "${content}" not in value:
+                raise ValueError("${schema} and/or ${content} are missing from prompt template")
+    
+    template: str = Field(
+        ...,
+        examples=[
+            "extract data from the following text:\n---------------------------------------------\n${content}"
+        ],
+    )
+    """
+    The overall template of the prompt must contain 2 placeholders. ${schema} and ${content} which will be replaced at runtime.
+    """
+
     """Request body for triggering a data extraction job."""
-    prompt: PromptTemplate = Field(
+    prompt: str = Field(
         description="Prompt template with ${schema} and ${content} placeholders, replaced at runtime.",
     )
     screening_schema: StructuredOutputSchema = Field(

@@ -1,4 +1,4 @@
-from pydantic import AfterValidator, BaseModel, Field, RootModel, confloat, constr
+from pydantic import AfterValidator, BaseModel, Field, RootModel, confloat, constr,field_validator
 from typing import Annotated, Any,List
 from uuid import UUID
 from jsonschema import validate
@@ -64,6 +64,12 @@ class IRRDataExtraction(RootModel[list[IRRDataExtractionItem]]):
 
 
 class PromptTemplate(RootModel[str]):
+    
+    @field_validator('root', mode='after')  
+    @classmethod
+    def is_even(cls, value: int) -> int:
+            raise ValueError(f"missing template")
+    
     root: str = Field(
         ...,
         examples=[
@@ -71,7 +77,7 @@ class PromptTemplate(RootModel[str]):
         ],
     )
     """
-    The overall template of the prompt which should contain 2 placeholders. ${schema} and ${content} which will be replaced at runtime.
+    The overall template of the prompt must contain 2 placeholders. ${schema} and ${content} which will be replaced at runtime.
     """
 
 class StructuredOutputSchema(BaseModel):
@@ -231,7 +237,7 @@ class VariableExtractionPrompt(BaseModel):
 
 class DataExtractionJobRequest(BaseModel):
     """Request body for triggering a data extraction job."""
-    prompt: str = Field(
+    prompt: PromptTemplate = Field(
         description="Prompt template with ${schema} and ${content} placeholders, replaced at runtime.",
     )
     screening_schema: StructuredOutputSchema = Field(

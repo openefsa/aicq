@@ -233,26 +233,21 @@ class VariableExtractionPrompt(BaseModel):
 
 class DataExtractionJobRequest(BaseModel):
 
-    @field_validator('template', mode='after')  
+    @field_validator('prompt', mode='after')  
     @classmethod
-    def has_placeholders(cls, value: int) -> int:
+    def has_placeholders(cls, value: str) -> str:
             if "${schema}" not in value or "${content}" not in value:
                 raise ValueError("${schema} and/or ${content} are missing from prompt template")
+            else:
+                value
     
-    template: str = Field(
-        ...,
+    prompt: str = Field(
+        description="Prompt template with ${schema} and ${content} placeholders, replaced at runtime.",
         examples=[
             "extract data from the following text:\n---------------------------------------------\n${content}"
         ],
     )
-    """
-    The overall template of the prompt must contain 2 placeholders. ${schema} and ${content} which will be replaced at runtime.
-    """
 
-    """Request body for triggering a data extraction job."""
-    prompt: str = Field(
-        description="Prompt template with ${schema} and ${content} placeholders, replaced at runtime.",
-    )
     screening_schema: StructuredOutputSchema = Field(
         description="JSON schema specifying which data to extract from documents.",
     )

@@ -239,7 +239,7 @@ class DataExtractionJobRequest(BaseModel):
             if "${schema}" not in value or "${content}" not in value:
                 raise ValueError("${schema} and/or ${content} are missing from prompt template")
             else:
-                value
+                return value
     
     prompt: str = Field(
         description="Prompt template with ${schema} and ${content} placeholders, replaced at runtime.",

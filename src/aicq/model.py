@@ -1,4 +1,4 @@
-from pydantic import AfterValidator, BaseModel, Field, RootModel, confloat, constr,field_validator
+from pydantic import AfterValidator, BaseModel, Field, RootModel, confloat, constr,field_validator,StringConstraints
 from typing import Annotated, Any,List
 from uuid import UUID
 from jsonschema import validate
@@ -258,4 +258,10 @@ class DataExtractionJobRequest(BaseModel):
         default=False,
         description="When True, pass the original PDF pages to the LLM as multimodal input instead of extracting text first.",
     )
+
+
+class AicqJob(BaseModel):
+    request: DataExtractionJobRequest
+    title: Annotated[str, StringConstraints(ascii_only=True)]
+
 

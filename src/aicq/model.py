@@ -1,5 +1,7 @@
+import datetime
+
 from pydantic import AfterValidator, BaseModel, Field, RootModel, confloat, constr,field_validator,StringConstraints
-from typing import Annotated, Any,List
+from typing import Annotated, Any,List,Literal,Union
 from uuid import UUID
 from jsonschema import validate
 from jsonschema import Draft202012Validator
@@ -14,8 +16,8 @@ def assert_valid_schema(value):
     return value
     
 
-class DOI(RootModel[constr(pattern=r"^10.*$")]):
-    root: constr(pattern=r"^10.*$") = Field(..., examples=["10.2903/j.efsa.2026.10049"])
+class DOI(RootModel[Annotated[str, Field(pattern=r"^10.*$")]]):
+    root: Annotated[str, Field(pattern=r"^10.*$")] = Field(..., examples=["10.2903/j.efsa.2026.10049"])
     """
     Digital Object Identifier
     """
@@ -26,7 +28,7 @@ class DOI(RootModel[constr(pattern=r"^10.*$")]):
 class IRRDataExtractionItem(BaseModel):
     variable_name: str | None = None
     all_values: list[Any] | None = None
-    unalike_score: confloat(ge=0.0, le=1.1) | None = None
+    unalike_score: Annotated[float, Field(ge=0.0, le=1.1)] | None = None
     """
     Used if the variable is type 'categorical' or 'binary'. see R function ragree::unalike
     """
@@ -34,7 +36,7 @@ class IRRDataExtractionItem(BaseModel):
     """
     Used if the variable is type 'text'. Uses 'edit distance' to calculate  text similarity metrices and then aggregate via xxxx into a single value
     """
-    embedding_distance: confloat(ge=0.0, le=1.1) | None = None
+    embedding_distance: Annotated[float, Field(ge=0.0, le=1.1)] | None = None
     """
     Used if the variable is type 'text', Uses sentence-transformer to calculate embeddings and pair-wise cosine distance as text similarity metric and then aggregate via mean to a single value
     """
@@ -42,7 +44,7 @@ class IRRDataExtractionItem(BaseModel):
     """
     Used if the variable is type 'number'
     """
-    string_irr_strength: confloat(ge=0.0, le=1.1) | None = None
+    string_irr_strength: Annotated[float, Field(ge=0.0, le=1.1)] | None = None
     """
     Used if the variable is type 'string'. Contains the LLM agreement scale (0.0-1.0).
     """
@@ -144,7 +146,7 @@ class TitleAbstract(BaseModel):
 
 class ValidationDataExtractionItem(BaseModel):
     variable_name: str | None = None
-    agreement_with_ground_truth: confloat(ge=0.0, le=1.0) | None = None
+    agreement_with_ground_truth: Annotated[float, Field(ge=0.0, le=1.0)] | None = None
     """
     Some form of scoring, able to compare single ground trueth and multiple LLM extractions/predictions. Need to work for categorical/binary variables, but also for text variables and produce a single score. Maybe this needs first an 'agreement' (using mayority vote ??. 'LLM as judge to summarize for text' ?) calculation for the multiple LLMs before comparing with single ground trueth
     """
@@ -156,7 +158,7 @@ class ValidationDataExtraction(RootModel[list[ValidationDataExtractionItem]]):
 
 class ValidationScreeningItem(BaseModel):
     variable_name: str | None = None
-    agreement_with_ground_truth: confloat(ge=0.0, le=1.0) | None = None
+    agreement_with_ground_truth: Annotated[float, Field(ge=0.0, le=1.0)] | None = None
     """
     Some form of scoring, able to compare single ground trueth and multiple LLM extractions/predictions. Need to work for 'boolean' variables.  Maybe this needs first an 'agreement' (using mayority vote ??. ) calculation for the multiple LLMs before comparing with single ground trueth
     """
@@ -166,15 +168,15 @@ class ValidationScreening(RootModel[list[ValidationScreeningItem]]):
     root: list[ValidationScreeningItem]
 
 
-class ScreeningAgreement(RootModel[confloat(ge=0.0, le=1.0)]):
-    root: confloat(ge=0.0, le=1.0)
+class ScreeningAgreement(RootModel[Annotated[float, Field(ge=0.0, le=1.0)]]):
+    root: Annotated[float, Field(ge=0.0, le=1.0)]
     """
     Aggrement mong different LLMs regaring a screening variable prediction
     """
 
 
-class FleissKappa(RootModel[confloat(ge=0.0, le=1.0)]):
-    root: confloat(ge=0.0, le=1.0)
+class FleissKappa(RootModel[Annotated[float, Field(ge=0.0, le=1.0)]]):
+    root: Annotated[float, Field(ge=0.0, le=1.0)]
 
 
 class ScreeningDecisionItem(BaseModel):
@@ -265,3 +267,29 @@ class AicqJob(BaseModel):
     title: Annotated[str, StringConstraints(ascii_only=True)]
 
 
+
+
+class PromptSnippetType(BaseModel):
+     type: str 
+
+class StringSnippetType(PromptSnippetType):
+     type: Literal["string"] = "string"  
+
+class EnumSnippetType(PromptSnippetType):
+    type: Literal["enum"] = "enum"  
+    options: List[str]
+
+
+
+class ExtractionPromptSnippet(BaseModel):
+    name: str
+    description: str
+    snippet_type: Union[EnumSnippetType, StringSnippetType] = Field(discriminator="type")
+
+class ExtractionPromptUsage(BaseModel):
+   user: str
+   unit: str
+   used_llms: List[str]
+   date_of_usage: datetime.date
+   snippet: ExtractionPromptSnippet
+   comment: str

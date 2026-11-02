@@ -2,7 +2,7 @@ import unittest
 
 from jsonschema import SchemaError
 
-from aicq.model import StructuredOutputSchema
+from aicq.model import *
 from aicq.llm import get_model_list, get_model_info
 
 valid_schema = {
@@ -106,3 +106,14 @@ class MyTest(unittest.TestCase):
     def test_output_valid(self):
         StructuredOutputSchema(json_schema=valid_schema)
         StructuredOutputSchema(json_schema={"properties": {"a_thing": {}}})
+        
+    def test_snippet_type(self):
+        ExtractionPromptSnippet (name="species",
+                                 description="which species is the study about ?",
+                                 type=StringSnippetType())
+        ExtractionPromptSnippet (name="species",
+                                 description="which species is the study about ?",
+                                 type=EnumSnippetType(options=["a","b"]))
+
+        
+            

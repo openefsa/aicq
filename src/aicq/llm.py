@@ -32,19 +32,19 @@ MODEL_INFO = {
     "autocat-runtime-$ENV$-llm-claude-sonnet-4_5": {
         "env": "databricks",
         "limits": {"max_tokens": 64000},
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {"benchlm": {"overall": 47.2,"inputPrice": 3, "outputPrice": 15}},
         "oca": ["anthropic", "claude-sonnet-4-5"],
     },
     "autocat-runtime-$ENV$-llm-claude-sonnet-4_6": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {"benchlm": {"overall": 55.3 ,"inputPrice": 3, "outputPrice": 15}},
         "oca": ["anthropic", "claude-sonnet-4-6"],
     },
     "autocat-runtime-$ENV$-llm-gpt4o": {
         "env": "databricks",
         "limits": {"max_tokens": 16384},
-        "benchmarks": {"benchlm": {"overall": 0}}, 
+        "benchmarks": {"benchlm": {"overall": 29.3,"inputPrice": 2.5, "outputPrice": 10}}, 
         "oca": ["azure", "gpt-4o-1120"],
     },
     "autocat-runtime-$ENV$-llm-gpt4o-mini": {
@@ -64,7 +64,7 @@ MODEL_INFO = {
     "autocat-runtime-$ENV$-llm-gpt5_1": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {"benchlm": {"overall": 56.8,"inputPrice": 1.25, "outputPrice": 10}},
         "oca": ["azure", "gpt-5.1"],
     },
     "autocat-runtime-$ENV$-llm-gpt5_4": {
@@ -118,7 +118,7 @@ MODEL_INFO = {
     "autocat-runtime-$ENV$-llm-gpt5-nano": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
-        "benchmarks": {"benchlm": {"overall": 0}},
+        "benchmarks": {"benchlm": {"overall": 36.4,, "inputPrice": 0.05, "outputPrice": 0.4}},
         "oca": ["azure", "gpt-5-mini"],
     },
 }

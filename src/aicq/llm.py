@@ -118,7 +118,7 @@ MODEL_INFO = {
     "autocat-runtime-$ENV$-llm-gpt5-nano": {
         "env": "databricks",
         "limits": {"max_tokens": 128000},
-        "benchmarks": {"benchlm": {"overall": 36.4,, "inputPrice": 0.05, "outputPrice": 0.4}},
+        "benchmarks": {"benchlm": {"overall": 36.4, "inputPrice": 0.05, "outputPrice": 0.4}},
         "oca": ["azure", "gpt-5-mini"],
     },
 }

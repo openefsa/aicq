@@ -26,8 +26,9 @@ class DOI(RootModel[Annotated[str, Field(pattern=r"^10.*$")]]):
 
 
 class IRRDataExtractionItem(BaseModel):
-    variable_name: str | None = None
-    all_values: list[Any] | None = None
+    variable_name: str 
+    all_values: list[Any] 
+    models: list[str]
     unalike_score: Annotated[float, Field(ge=0.0, le=1.1)] | None = None
     """
     Used if the variable is type 'categorical' or 'binary'. see R function ragree::unalike
@@ -296,9 +297,9 @@ class ExtractionPromptUsage(BaseModel):
    
    
 class DataExtractionJobResult(BaseModel):
-   data_extraction_results: List[DataExtractionResult]    
-   data_extraction_irrs: List[IRRDataExtraction]    
-   failed_files: List[str]
+   data_extraction_results: list[DataExtractionResult]    
+   data_extraction_irrs: list[IRRDataExtraction]    
+   failed_files: list[str]
    user_email: str
    
    

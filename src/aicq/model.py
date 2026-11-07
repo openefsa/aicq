@@ -293,3 +293,12 @@ class ExtractionPromptUsage(BaseModel):
    date_of_usage: datetime.date
    snippet: ExtractionPromptSnippet
    comment: str
+   
+   
+class DataExtractionJobResult(BaseModel):
+   data_extraction_results: List[DataExtractionResult]    
+   data_extraction_irrs: List[IRRDataExtraction]    
+   failed_files: List[str]
+   user_email: str
+   
+   

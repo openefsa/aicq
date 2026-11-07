@@ -295,11 +295,19 @@ class ExtractionPromptUsage(BaseModel):
    snippet: ExtractionPromptSnippet
    comment: str
    
+class FailedFileInfo(BaseModel):
+    files: list[str]
+    error_msg: str
+    model_id: str
+    deployment_name: str 
+    deployment_env: str 
+    host: str
+    model: str
    
 class DataExtractionJobResult(BaseModel):
    data_extraction_results: list[DataExtractionResult]    
    data_extraction_irrs: list[IRRDataExtraction]    
-   failed_files: list[str]
+   failed_files: list[FailedFileInfo]
    user_email: str
    
    

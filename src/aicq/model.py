@@ -311,3 +311,10 @@ class DataExtractionJobResult(BaseModel):
    user_email: str
    
    
+class ScreeningJobResult(BaseModel):
+   screening_results: list[ScreeningResult] 
+   screening_irrs: IRRScreening
+   user_email: str
+   
+    
+   

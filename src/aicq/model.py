@@ -1,4 +1,5 @@
 import datetime
+from enum import Enum
 
 from pydantic import AfterValidator, BaseModel, Field, RootModel, confloat, constr,field_validator,StringConstraints
 from typing import Annotated, Any,List,Literal,Union
@@ -234,6 +235,12 @@ class VariableExtractionPrompt(BaseModel):
     """
 
 
+class ConversionMethod(str, Enum):
+    to_text = 'to_text'
+    to_image = 'to_image'
+    to_markdown = 'to_markdown'
+
+
 class DataExtractionJobRequest(BaseModel):
 
     @field_validator('prompt', mode='after')  
@@ -257,10 +264,7 @@ class DataExtractionJobRequest(BaseModel):
     models: List[str] = Field(
         description="List of LLM model identifiers to use. Each model independently extracts data.",
     )
-    use_original_document: bool = Field(
-        default=False,
-        description="When True, pass the original PDF pages to the LLM as multimodal input instead of extracting text first.",
-    )
+    
 
 
 class AicqJob(BaseModel):

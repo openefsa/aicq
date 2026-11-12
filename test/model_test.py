@@ -110,10 +110,17 @@ class MyTest(unittest.TestCase):
     def test_snippet_type(self):
         ExtractionPromptSnippet (name="species",
                                  description="which species is the study about ?",
-                                 type=StringSnippetType())
+                                 snippet_type=StringSnippetType())
         ExtractionPromptSnippet (name="species",
                                  description="which species is the study about ?",
-                                 type=EnumSnippetType(options=["a","b"]))
+                                 snippet_type=EnumSnippetType(options=["a","b"]))
+        
+    def test_job_request(self):
+        DataExtractionJobRequest(
+            prompt="test prompt  ${schema} and ${content} placeholders, replaced at runtime.",
+            screening_schema=StructuredOutputSchema(json_schema=valid_schema),
+            models=["gpt-5"],
+            conversion_method=ConversionMethod.to_image)    
 
         
             

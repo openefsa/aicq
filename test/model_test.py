@@ -1,6 +1,7 @@
 import unittest
 
 from jsonschema import SchemaError
+from pydantic import ValidationError
 
 from aicq.model import *
 from aicq.llm import get_model_list, get_model_info
@@ -108,19 +109,34 @@ class MyTest(unittest.TestCase):
         StructuredOutputSchema(json_schema={"properties": {"a_thing": {}}})
         
     def test_snippet_type(self):
-        ExtractionPromptSnippet (name="species",
+        prompt_elements = [
+        PromptElement (name="species",
                                  description="which species is the study about ?",
-                                 snippet_type=StringSnippetType())
-        ExtractionPromptSnippet (name="species",
+                                 element_type=StringPromptElementType()),
+        PromptElement (name="species",
                                  description="which species is the study about ?",
-                                 snippet_type=EnumSnippetType(options=["a","b"]))
+                                 element_type=EnumPromptElelementType(options=["a","b"])),
+        PromptElement (name="num_animals",
+                                 description="how many animals were studied",
+                                 element_type=NumberPromptElementType())
+            
+            
+        ]
+        
+        
+        
+        
         
     def test_job_request(self):
         DataExtractionJobRequest(
             prompt="test prompt  ${schema} and ${content} placeholders, replaced at runtime.",
             screening_schema=StructuredOutputSchema(json_schema=valid_schema),
             models=["gpt-5"],
-            conversion_method=ConversionMethod.to_image)    
+            conversion_method=ConversionMethod.to_image) 
+        
+    def test_invalid_prompt_template(self):
+        with self.assertRaises(ValidationError):
+            PromptTemplate("should fail")        
 
         
             

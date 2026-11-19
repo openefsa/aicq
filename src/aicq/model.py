@@ -69,6 +69,14 @@ class IRRDataExtraction(RootModel[list[IRRDataExtractionItem]]):
 
 class PromptTemplate(RootModel[str]):
     
+    @field_validator('root', mode='after')  
+    @classmethod
+    def has_placeholders(cls, value: str) -> str:
+            if "${schema}" not in value or "${content}" not in value:
+                raise ValueError("${schema} and/or ${content} are missing from prompt template")
+            else:
+                return value
+
     
     root: str = Field(
         ...,
@@ -274,29 +282,35 @@ class AicqJob(BaseModel):
 
 
 
-class PromptSnippetType(BaseModel):
+class PromptElementType(BaseModel):
      type: str 
 
-class StringSnippetType(PromptSnippetType):
+class NumberPromptElementType(PromptElementType):
+     type: Literal["number"] = "number"  
+
+
+class StringPromptElementType(PromptElementType):
      type: Literal["string"] = "string"  
 
-class EnumSnippetType(PromptSnippetType):
+class EnumPromptElelementType(PromptElementType):
     type: Literal["enum"] = "enum"  
     options: List[str]
 
 
 
-class ExtractionPromptSnippet(BaseModel):
+class PromptElement(BaseModel):
     name: str
     description: str
-    snippet_type: Union[EnumSnippetType, StringSnippetType] = Field(discriminator="type")
+    element_type: Union[EnumPromptElelementType, 
+                        StringPromptElementType,
+                        NumberPromptElementType] = Field(discriminator="type")
 
 class ExtractionPromptUsage(BaseModel):
    user: str
    unit: str
    used_llms: List[str]
    date_of_usage: datetime.date
-   snippet: ExtractionPromptSnippet
+   snippet: PromptElement
    comment: str
    
 class FailedFileInfo(BaseModel):

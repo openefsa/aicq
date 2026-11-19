@@ -9,7 +9,8 @@ name = "aicq"
 dynamic = ["version"]
 dependencies = [
   "pydantic==2.14.1",
-  "jsonschema==4.26.0"
+  "jsonschema==4.26.0",
+  "sqlmodel==0.0.50"
   
 ]
 requires-python = ">=3.11"

@@ -285,25 +285,50 @@ class AicqJob(BaseModel):
 class PromptElementType(BaseModel):
      type: str 
 
-class NumberPromptElementType(PromptElementType):
-     type: Literal["number"] = "number"  
-
 
 class StringPromptElementType(PromptElementType):
      type: Literal["string"] = "string"  
 
-class EnumPromptElelementType(PromptElementType):
-    type: Literal["enum"] = "enum"  
+
+class IntegerPromptElementType(BaseModel):
+    type: Literal["integer"] = "integer"
+
+
+class NumberPromptElementType(BaseModel):
+    type: Literal["number"] = "number"
+
+
+class BooleanPromptElementType(BaseModel):
+    type: Literal["boolean"] = "boolean"
+
+
+class EnumPromptElementType(BaseModel):
+    type: Literal["enum"] = "enum"
     options: List[str]
 
+
+class MultiEnumPromptElementType(BaseModel):
+    type: Literal["multi_enum"] = "multi_enum"
+    options: List[str]
 
 
 class PromptElement(BaseModel):
     name: str
     description: str
-    element_type: Union[EnumPromptElelementType, 
-                        StringPromptElementType,
-                        NumberPromptElementType] = Field(discriminator="type")
+    element_type: Annotated[
+        Union[
+            StringPromptElementType,
+            IntegerPromptElementType,
+            NumberPromptElementType,
+            BooleanPromptElementType,
+            EnumPromptElementType,
+            MultiEnumPromptElementType,
+        ],
+        Field(discriminator="type"),
+    ]
+
+
+
 
 class ExtractionPromptUsage(BaseModel):
    user: str

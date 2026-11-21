@@ -111,18 +111,23 @@ class MyTest(unittest.TestCase):
     def test_snippet_type(self):
         prompt_elements = [
         PromptElement (name="species",
+                       relevant_panel=EFSAPanel.AHAW,
+                       tags=[],
                                  description="which species is the study about ?",
                                  element_type=StringPromptElementType()),
         PromptElement (name="species",
+                       relevant_panel=EFSAPanel.AHAW,
+                       tags=["test"],
                                  description="which species is the study about ?",
-                                 element_type=EnumPromptElelementType(options=["a","b"])),
+                                 element_type=EnumPromptElementType(options=["a","b"])),
         PromptElement (name="num_animals",
+                       tags=["a","b"],
+                       relevant_panel=EFSAPanel.AHAW,
                                  description="how many animals were studied",
                                  element_type=NumberPromptElementType())
             
             
         ]
-        
         
         
         

@@ -1,5 +1,5 @@
 import datetime
-from enum import Enum
+from enum import Enum, StrEnum
 
 from pydantic import AfterValidator, BaseModel, Field, RootModel, confloat, constr,field_validator,StringConstraints
 from typing import Annotated, Any,List,Literal,Union
@@ -311,10 +311,26 @@ class MultiEnumPromptElementType(BaseModel):
     type: Literal["multi_enum"] = "multi_enum"
     options: List[str]
 
+class EFSAPanel(StrEnum):
+    AHAW = "AHAW",
+    BIOHAZ = "BIOHAZ",
+    CONTAM = "CONTAM",
+    FEEDAP = "FEEDAP",
+    FAF = "FAF",
+    FCM = "FCM",
+    FEZ = "FEZ",
+    GMO = "GMO",
+    NDA = "NDA",
+    PLH = "PLH",
+    PPR = "PPR",
+    OTHER = "OTHER"
+    
 
 class PromptElement(BaseModel):
+    relevant_panel: EFSAPanel
     name: str
     description: str
+    tags: list[str]
     element_type: Annotated[
         Union[
             StringPromptElementType,

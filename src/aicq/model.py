@@ -330,7 +330,7 @@ class PromptElement(BaseModel):
     relevant_panel: EFSAPanel
     name: str
     description: str
-    tags: list[str]
+    tags: set[str]
     element_type: Annotated[
         Union[
             StringPromptElementType,

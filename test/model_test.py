@@ -108,6 +108,63 @@ class MyTest(unittest.TestCase):
         StructuredOutputSchema(json_schema=valid_schema)
         StructuredOutputSchema(json_schema={"properties": {"a_thing": {}}})
         
+    def test_correct_enum(self):
+        StructuredOutputSchema(json_schema=
+   {
+    "type": "object",
+    "properties": {
+        "housing_system": {
+            "description": "d",
+            "enum": [1,2,3]}},
+    "required": [
+        "housing_system"]})
+
+    def test_incorrect_enum(self):
+        with self.assertRaises(ValidationError):
+            StructuredOutputSchema(json_schema=
+   {
+    "type": "object",
+    "properties": {
+        "housing_system": {
+            "description": "d",
+            "enum": [],
+    }},
+    "required": [
+        "housing_system"]})
+
+
+    def test_correct_multi_enum(self):
+            StructuredOutputSchema(json_schema=
+   {
+    "type": "object",
+    "properties": {
+        "housing_system": {
+            "description": "d",
+        "type": "array",
+        "items": {
+            "type": "string",
+            "enum": ["foo","bar"],
+    }}},
+    "required": [
+        "housing_system"]})
+
+    def test_incorrect_multi_enum(self):
+        with self.assertRaises(ValidationError):
+            StructuredOutputSchema(json_schema=
+   {
+    "type": "object",
+    "properties": {
+        "housing_system": {
+            "description": "d",
+        "type": "array",
+        "items": {
+            "type": "string",
+            "enum": [],
+    }}},
+    "required": [
+        "housing_system"]})
+            
+        
     def test_snippet_type(self):
         prompt_elements = [
         PromptElement (name="species",

@@ -1,7 +1,7 @@
 import datetime
 from enum import Enum, StrEnum
 
-from pydantic import AfterValidator, BaseModel, Field, RootModel, confloat, constr,field_validator,StringConstraints
+from pydantic import AfterValidator, BaseModel, Field, RootModel, ValidationError, confloat, constr,field_validator,StringConstraints
 from typing import Annotated, Any,List,Literal,Union
 from uuid import UUID
 from jsonschema import validate
@@ -14,6 +14,19 @@ meta_validator = Draft202012Validator(latest_meta_schema)
 
 def assert_valid_schema(value):
     meta_validator.check_schema(value)
+    for name,info in value['properties'].items():
+        if 'enum' in info:
+            enum_vals = info['enum']
+            if len(enum_vals)==0:
+                raise ValueError(f"enum '{name}' has no enum_values")
+        if info.get('type')=='array':
+            enum_vals=info['items']['enum']
+            if len(enum_vals)==0:
+                raise ValueError(f"multi-enum '{name}' has no enum_values")
+            
+            
+            
+        
     return value
     
 
